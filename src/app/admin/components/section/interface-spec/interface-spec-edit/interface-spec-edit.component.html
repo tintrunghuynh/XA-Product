@@ -1,0 +1,248 @@
+<h1 class="h1-panel">Interface Specification Edit Panel</h1>
+<div class="mat-elevation-z8 margin-1">
+    <div class="loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+    <div class="button-row">
+        <button mat-raised-button color="accent" [routerLink]="['../../']">
+            <mat-icon>list</mat-icon>
+        </button>
+    </div>
+    <mat-error *ngIf="errorMSG" class="margin-1"
+        >Message From Server: {{ errorMSG }}</mat-error
+    >
+    <mat-card *ngIf="resp">
+        <form
+            class="inputForm"
+            [formGroup]="FORM"
+            #checkoutForm="ngForm"
+            (ngSubmit)="onSubmit(checkoutForm)"
+            novalidate
+        >
+            <mat-form-field class="full-width">
+                <input
+                    matInput
+                    [disabled]="true"
+                    placeholder="ID:"
+                    value="{{ resp.data._id }}"
+                    class="color-black"
+                />
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <input
+                    matInput
+                    required
+                    placeholder="Name"
+                    formControlName="name"
+                    class=""
+                />
+                <mat-error>
+                    <app-messages-control
+                        [control]="FORM.get('name')"
+                    ></app-messages-control>
+                </mat-error>
+            </mat-form-field>
+            <div class="full-width">
+                <mat-form-field fxFlex="50%">
+                    <mat-label>Category</mat-label>
+                    <mat-select
+                        mat-select
+                        matNativeControl
+                        required
+                        formControlName="category"
+                    >
+                        <mat-option
+                            *ngFor="let element of categories"
+                            [value]="element"
+                            required
+                            >{{ element }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>
+                        <app-messages-control
+                            [control]="FORM.get('category')"
+                        ></app-messages-control>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="50%">
+                    <mat-label>Status</mat-label>
+                    <mat-select
+                        mat-select
+                        matNativeControl
+                        required
+                        formControlName="status"
+                    >
+                        <mat-option
+                            *ngFor="let element of status"
+                            [value]="element"
+                            required
+                            >{{ element }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>
+                        <app-messages-control
+                            [control]="FORM.get('status')"
+                        ></app-messages-control>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <mat-card
+                formArrayName="specifications"
+                cdkDropList
+                (cdkDropListDropped)="drop($event)"
+            >
+                <mat-label>Specification List</mat-label>
+                <!-- Start form Fields array with first row must and dynamically add more -->
+                <!-- loop throught Fields -->
+                <div
+                    *ngFor="
+                        let field of FORM.controls['specifications'].controls;
+                        let i = index
+                    "
+                    cdkDrag
+                    #ele="cdkDrag"
+                    class="drop-list"
+                >
+                    <!-- group name in this case row index -->
+                    <div
+                        [formGroup]="field"
+                        [formGroupName]="i"
+                        fxLayout="row"
+                        fxLayout.xs="column"
+                        fxLayoutWrap
+                        fxLayoutGap="3.5%"
+                        fxLayoutAlign="center"
+                        class="drop-box row"
+                    >
+                        <mat-form-field fxFlex="35%">
+                            <input
+                                matInput
+                                placeholder="Name"
+                                formControlName="fieldName"
+                                required
+                            />
+                            <mat-error>
+                                <app-messages-control
+                                    [control]="field.get('fieldName')"
+                                ></app-messages-control>
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex="35%">
+                            <mat-label>Type</mat-label>
+                            <mat-select
+                                mat-select
+                                matNativeControl
+                                required
+                                formControlName="fieldType"
+                            >
+                                <mat-option
+                                    *ngIf="ele.moved"
+                                    hidden="!ele.moved"
+                                    >{{
+                                        "field.get('fieldType').value"
+                                    }}</mat-option
+                                >
+
+                                <mat-option
+                                    *ngFor="let type of fieldTypes"
+                                    [value]="type"
+                                    required
+                                    >{{ type }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>
+                                <app-messages-control
+                                    [control]="field.get('fieldType')"
+                                ></app-messages-control>
+                            </mat-error>
+                        </mat-form-field>
+                        <span hidden cdkDragHandle></span>
+                        <!--Avoid drag if FormArray.length = 1 -->
+                        <span
+                            *ngIf="
+                                FORM.controls['specifications'].controls
+                                    .length > 1
+                            "
+                        >
+                            <button
+                                type="button"
+                                mat-mini-fab
+                                class="margin-1"
+                                color="warn"
+                                fxFlex="nogrow"
+                                (click)="removeRow(i)"
+                            >
+                                <mat-icon>delete_forever</mat-icon>
+                            </button>
+                            <button
+                                type="button"
+                                mat-mini-fab
+                                class="margin-1"
+                                color="primary"
+                                fxFlex="nogrow"
+                                cdkDragHandle
+                            >
+                                <mat-icon>reorder</mat-icon>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- New Row button -->
+                <mat-card-actions
+                    ><button
+                        type="button"
+                        mat-raised-button
+                        color="accent"
+                        (click)="addRow()"
+                    >
+                        <mat-icon>plus_one</mat-icon>
+                    </button></mat-card-actions
+                >
+                <!-- End form units array -->
+            </mat-card>
+
+            <mat-form-field class="full-width">
+                <textarea
+                    matInput
+                    required
+                    placeholder="Description"
+                    formControlName="descriptions"
+                ></textarea>
+                <mat-error>
+                    <app-messages-control
+                        [control]="FORM.get('descriptions')"
+                    ></app-messages-control>
+                </mat-error>
+            </mat-form-field>
+
+            <!-- <mat-form-field class="full-width">
+                <input
+                    class=""
+                    matInput
+                    required
+                    placeholder="Status"
+                    formControlName="status"
+                />
+                <mat-error>
+                    <app-messages-control
+                        [control]="FORM.get('status')"
+                    ></app-messages-control>
+                </mat-error>
+            </mat-form-field> -->
+
+            <div class="button-row">
+                <button
+                    type="submit"
+                    [disabled]="!FORM.valid"
+                    mat-flat-button
+                    color="primary"
+                >
+                    <mat-icon>save</mat-icon>
+                </button>
+            </div>
+        </form>
+    </mat-card>
+</div>

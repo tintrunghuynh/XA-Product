@@ -1,0 +1,156 @@
+<h1 class="h1-panel">Interface Specification Details Panel</h1>
+<div class="mat-elevation-z8 margin-1">
+    <div class="loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+    <div class="button-row">
+        <button mat-raised-button color="accent" [routerLink]="['../../']">
+            <mat-icon>list</mat-icon>
+        </button>
+        <button
+            mat-raised-button
+            color="accent"
+            [routerLink]="['../../create']"
+        >
+            <mat-icon>add</mat-icon>
+        </button>
+        <button
+            *ngIf="detailsObject"
+            mat-raised-button
+            color="accent"
+            [routerLink]="['../../edit', detailsObject._id]"
+        >
+            <mat-icon>edit</mat-icon>
+        </button>
+    </div>
+    <ng-container *ngIf="detailsObject">
+        <mat-card class="">
+            <mat-form-field class="full-width">
+                <input
+                    matInput
+                    [disabled]="true"
+                    placeholder="ID:"
+                    value="{{ detailsObject._id }}"
+                    class="color-black"
+                />
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <input
+                    matInput
+                    [disabled]="true"
+                    placeholder="Name:"
+                    value="{{ detailsObject.name }}"
+                    class="color-black"
+                />
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <input
+                    matInput
+                    [disabled]="true"
+                    placeholder="Category:"
+                    value="{{ detailsObject.category }}"
+                    class="color-black"
+                />
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <input
+                    matInput
+                    [disabled]="true"
+                    placeholder="Status:"
+                    value="{{ detailsObject.status }}"
+                    class="color-black"
+                />
+            </mat-form-field>
+
+            <mat-card>
+                <mat-label>Specification List</mat-label>
+                <!-- Start form Fields array with first row must and dynamically add more -->
+                <!-- loop throught Fields -->
+                <div class="full-width">
+                    <mat-form-field fxFlex="100%">
+                        <input
+                            matInput
+                            (keyup)="applyFilter($event.target.value)"
+                            placeholder="Filter"
+                        />
+                    </mat-form-field>
+                </div>
+                <table
+                    mat-table
+                    [dataSource]="dataSource"
+                    class="mat-elevation-z8"
+                >
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="Name">
+                        <th mat-header-cell *matHeaderCellDef>NAME</th>
+                        <td mat-cell *matCellDef="let row">
+                            <span class="data-span">{{ row.fieldName }}</span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="Type">
+                        <th mat-header-cell *matHeaderCellDef>TYPE</th>
+                        <td mat-cell *matCellDef="let row">
+                            <span class="data-span">{{ row.fieldType }}</span>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr
+                        mat-row
+                        *matRowDef="let row; columns: displayedColumns"
+                    ></tr>
+                </table>
+
+                <!-- End form units array -->
+            </mat-card>
+
+            <mat-form-field class="full-width">
+                <textarea
+                    matInput
+                    [disabled]="true"
+                    placeholder="Description:"
+                    value="{{ detailsObject.descriptions }}"
+                    class="color-black"
+                ></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <input
+                    matInput
+                    [disabled]="true"
+                    placeholder="Status:"
+                    value="{{ detailsObject.status }}"
+                    class="color-black"
+                />
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <input
+                    matInput
+                    [disabled]="true"
+                    placeholder="Created:"
+                    value="{{
+                        detailsObject.createdDate | date: 'dd/MM/yyyy hh:mm:ss'
+                    }}"
+                    class="color-black"
+                />
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <input
+                    matInput
+                    [disabled]="true"
+                    placeholder="Updated:"
+                    value="{{
+                        detailsObject.updatedDate | date: 'dd/MM/yyyy hh:mm:ss'
+                    }}"
+                    class="color-black"
+                />
+            </mat-form-field>
+        </mat-card>
+    </ng-container>
+</div>
