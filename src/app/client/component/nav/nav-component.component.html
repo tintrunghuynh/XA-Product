@@ -1,0 +1,61 @@
+
+<button id="btn-nav-menu" class="col btn btn-hover-animate btn-bars">
+  <i class="fas fa-bars" id="fa-bars"></i>
+</button>
+<div id="search-box" class="search-box" state="default">
+  <div class="btn-delete">
+    <i class="fas fa-times"></i>
+  </div>
+  <input type="text" name="txt-search" class="txt-search"
+    placeholder="Type to search" value="" />
+  <a class="btn-search" href="#archon-for-section">
+    <i class="fas fa-search"></i>
+  </a>
+</div>
+
+
+
+<div style="display: flexbox">
+  <div id="panel-nav-menu" state="default">
+    <div class="middle-vertical">
+
+      <div id="copied-sub-nav">
+        <ul class="row">
+          <li class="col"><button type="button" class="col btn
+              btn-hover-animate"><i class="fas fa-home"></i>HOME</button></li>
+          <li class="col"><button type="button" class="col btn
+              btn-hover-animate"><i class="fas fa-shopping-cart"></i>CART</button></li>
+          <li class="col"><button type="button" class="col btn
+              btn-hover-animate"><i class="fas fa-info-circle"></i>ABOUT</button></li>
+        </ul>
+      </div>
+
+
+      <li class="menu-cate" id="plants-cate">
+        <a name="cate-name" href="#plants-cate" class="btn"><i
+            class="fab fa-pagelines" style="margin-left:5px;"></i>&nbsp;Plants</a>
+        <div class="menu-item">
+          <a href="#/" class="sub-menu">Sub menu 1</a>
+          <a href="#/" class="sub-menu">Sub menu 2</a>
+        </div>
+      </li>
+      <li class="menu-cate" id="fishes-cate">
+        <a name="cate-name" href="#fishes-cate" class="btn"><i
+            class="fas fa-fish"></i>Fishes</a>
+        <div class="menu-item">
+          <a href="#/" class="sub-menu">Sub menu 3</a>
+          <a href="#/" class="sub-menu">Sub menu 4</a>
+        </div>
+      </li>
+      <li class="menu-cate">
+        <button type="button" id="btn-close-panel-nav-menu"
+          class="btn
+          col btn-hover-animate">
+          Close
+        </button>
+      </li>
+      <a id="hidden-url" href="#" style="display: none">Hidden URL</a>
+    </div>
+  </div>
+  <div id="mask-bg"></div>
+</div>

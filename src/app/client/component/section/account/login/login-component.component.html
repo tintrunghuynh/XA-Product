@@ -1,0 +1,66 @@
+<!-- <div id="user-login-panel">
+    <form (submit)="login()">
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input
+                type="email"
+                class="form-control"
+                name="email"
+                placeholder="Enter email"
+                [(ngModel)]="credentials.email"
+            />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input
+                type="password"
+                class="form-control"
+                name="password"
+                placeholder="Password"
+                [(ngModel)]="credentials.password"
+            />
+        </div>
+        <button type="submit" class="btn btn-default">Sign in!</button>
+    </form>
+</div> -->
+
+<div id="user-login-register-panel">
+    <form (submit)="login()">
+        <h1>LOGIN</h1>
+        <div class="content">
+            <div class="row-input">
+                <input
+                    [(ngModel)]="credentials.email"
+                    id="input-email"
+                    type="email"
+                    name="email"
+                    autocomplete="off"
+                    required
+                    placeholder="Eg. abc@xyz.etc"
+                />
+                <label for="input-email">Email</label>
+            </div>
+
+            <div class="row-input">
+                <input
+                    id="input-password"
+                    type="password"
+                    name="password"
+                    required
+                    minlength="8"
+                    [(ngModel)]="credentials.password"
+                />
+                <label for="input-password">Password</label>
+            </div>
+            <div class="row-input center">
+                <button type="submit" class="btn btn-hover-animate">
+                    Login
+                </button>
+            </div>
+            <!-- <hr /> -->
+            <div class="msg">
+                <p class="non-selectable">&nbsp;&nbsp;</p>
+            </div>
+        </div>
+    </form>
+</div>

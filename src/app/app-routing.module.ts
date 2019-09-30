@@ -1,6 +1,14 @@
 import { NgModule, Component } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
+
+import { ClientComponent } from "./client/component/client-component.component";
+import { AppComponent } from "./app.component";
+import { LoginComponent } from "./client/component/section/account/login/login-component.component";
+import { RegisterComponent } from "./client/component/section/account/register/register-component.component";
+import { ProfileComponent } from "./client/component/section/account/profile/profile-component.component";
+
+
 import { AdminComponent } from "./admin/components/admin-component.component";
 
 import { AdmInterfaceSpecComponent } from "./admin/components/section/interface-spec/interface-spec.component";
@@ -26,35 +34,18 @@ import { AdmUserEditComponent } from "./admin/components/section/user/user-edit/
 
 const routes: Routes = [
     {
-        path: "", component: AdminComponent, children: [
+        path: "",
+        component: ClientComponent,
+        children: [
             {
-                path: "interfaceSpecification", children: [
-                    { path: "", component: AdmInterfaceSpecComponent },
-                    { path: "create", component: AdmInterfaceSpecCreateComponent },
-                    { path: "details/:_id", component: AdmInterfaceSpecDetailsComponent },
-                    { path: "edit/:_id", component: AdmInterfaceSpecEditComponent },
-                ]
+                path: "login", component: LoginComponent
+            }, {
+                path: "register", component: RegisterComponent
             },
             {
-                path: "category", children: [
-                    { path: "", component: AdmCategoryComponent },
-                    { path: "create", component: AdmCategoryCreateComponent },
-                    { path: "details/:_id", component: AdmCategoryDetailsComponent },
-                    { path: "edit", component: AdmCategoryEditComponent },
-                ]
-            },
-            { path: "product", component: AdmProductComponent },
-            {
-                path: "user", children: [
-                    { path: "", component: AdmUserComponent },
-                    { path: "create", component: AdmUserCreateComponent },
-                    { path: "details/:_id", component: AdmUserDetailsComponent },
-                    { path: "edit", component: AdmUserEditComponent },
-                ]
-            },
-            { path: "cart", component: AdmCartComponent },
+                path: "profile", component: ProfileComponent
+            }
         ]
-
     },
     {
         path: "admin",

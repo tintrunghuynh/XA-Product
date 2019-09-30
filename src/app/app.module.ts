@@ -9,20 +9,30 @@ import { ApolloModule, Apollo } from "apollo-angular";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { HttpLinkModule, HttpLink } from "apollo-angular-link-http";
 import {
-  MatInputModule,
-  MatTableModule,
-  MatPaginatorModule,
-  MatSortModule,
-  MatProgressSpinnerModule,
-  MatIconModule,
-  MatButtonModule,
-  MatCardModule,
-  MatFormFieldModule,
-  MatDividerModule,
-  MatSelectModule
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatDividerModule,
+    MatSelectModule
 } from "@angular/material";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
+
+// User
+import { NavComponent } from "./client/component/nav/nav-component.component";
+import { HeaderComponent } from "./client/component/header/header-component.component";
+import { ClientComponent } from "./client/component/client-component.component";
+import { RegisterComponent } from "./client/component/section/account/register/register-component.component";
+import { LoginComponent } from "./client/component/section/account/login/login-component.component";
+import { FooterComponent } from "./client/component/footer/footer-component.component";
+import { ProfileComponent } from "./client/component/section/account/profile/profile-component.component";
+import { ProductComponent } from "./client/component/section/product/product-component.component";
 
 // Admin
 import { AdminComponent } from "./admin/components/admin-component.component";
@@ -60,87 +70,97 @@ import { MessagesControlComponent } from "./services/validator/components/messag
 
 // ]
 @NgModule({
-  declarations: [
-    AppComponent,
+    declarations: [
+        AppComponent,
 
-    // Admin
-    AdminComponent,
-    AdmFooterComponent,
-    AdmHeaderComponent,
-    AdmNavComponent,
+        // Client
+        ClientComponent,
+        NavComponent,
+        HeaderComponent,
+        RegisterComponent,
+        LoginComponent,
+        FooterComponent,
+        ProfileComponent,
+        ProductComponent,
 
-    AdmInterfaceSpecComponent,
-    AdmInterfaceSpecCreateComponent,
-    AdmInterfaceSpecDetailsComponent,
-    AdmInterfaceSpecEditComponent,
+        // Admin
+        AdminComponent,
+        AdmFooterComponent,
+        AdmHeaderComponent,
+        AdmNavComponent,
 
-    AdmCategoryComponent,
-    AdmCategoryCreateComponent,
-    AdmCategoryDetailsComponent,
-    AdmCategoryEditComponent,
+        AdmInterfaceSpecComponent,
+        AdmInterfaceSpecCreateComponent,
+        AdmInterfaceSpecDetailsComponent,
+        AdmInterfaceSpecEditComponent,
 
-    AdmProductComponent,
-    AdmProductCreateComponent,
-    AdmProductDetailsComponent,
-    AdmProductEditComponent,
+        AdmCategoryComponent,
+        AdmCategoryCreateComponent,
+        AdmCategoryDetailsComponent,
+        AdmCategoryEditComponent,
 
-    AdmUserComponent,
-    AdmUserCreateComponent,
-    AdmUserDetailsComponent,
-    AdmUserEditComponent,
+        AdmProductComponent,
+        AdmProductCreateComponent,
+        AdmProductDetailsComponent,
+        AdmProductEditComponent,
 
-    AdmCartComponent,
-    AdmCartCreateComponent,
-    AdmCartDetailsComponent,
-    AdmCartEditComponent,
-    MessagesControlComponent
-  ],
-  imports: [
-    BrowserModule,
-    FlexLayoutModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    DragDropModule,
-    BrowserAnimationsModule,
+        AdmUserComponent,
+        AdmUserCreateComponent,
+        AdmUserDetailsComponent,
+        AdmUserEditComponent,
 
-    // Apollo Module
-    HttpClientModule,
-    ApolloModule,
-    HttpLinkModule,
+        AdmCartComponent,
+        AdmCartCreateComponent,
+        AdmCartDetailsComponent,
+        AdmCartEditComponent,
+        MessagesControlComponent
+    ],
+    imports: [
+        BrowserModule,
+        FlexLayoutModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        DragDropModule,
+        BrowserAnimationsModule,
 
-    // Mat
-    MatInputModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatProgressSpinnerModule,
-    MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatDividerModule,
-    MatSelectModule
-  ],
-  providers: [GeneralValidationService],
-  bootstrap: [AppComponent]
+        // Apollo Module
+        HttpClientModule,
+        ApolloModule,
+        HttpLinkModule,
+
+        // Mat
+        MatInputModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatProgressSpinnerModule,
+        MatIconModule,
+        MatButtonModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatDividerModule,
+        MatSelectModule
+    ],
+    providers: [GeneralValidationService],
+    bootstrap: [AppComponent]
 })
 
 export class AppModule {
 
-  constructor(private apollo: Apollo, private httpLink: HttpLink) {
-    // Reading Environment Variables
-    const GRAPHQL_BASEURI = process.env.GraphQL_URL_PATH || "http://localhost:3000/graphql-retrieve";
+    constructor(private apollo: Apollo, private httpLink: HttpLink) {
+        // Reading Environment Variables
+        const GRAPHQL_BASEURI = process.env.GraphQL_URL_PATH || "http://localhost:3000/graphql-retrieve";
 
-    console.log(`uri: ${GRAPHQL_BASEURI}`);
-    this.apollo.create({
-      link: this.httpLink.create({
-        uri: GRAPHQL_BASEURI,
-        // Don't forget that you can actually pass http Headers
-        // directly here with the option "httpOptions"
-      }),
-      cache: new InMemoryCache({ dataIdFromObject: o => o.id }),
-    });
-  }
+        console.log(`uri: ${GRAPHQL_BASEURI}`);
+        this.apollo.create({
+            link: this.httpLink.create({
+                uri: GRAPHQL_BASEURI,
+                // Don't forget that you can actually pass http Headers
+                // directly here with the option "httpOptions"
+            }),
+            cache: new InMemoryCache({ dataIdFromObject: o => o.id }),
+        });
+    }
 }

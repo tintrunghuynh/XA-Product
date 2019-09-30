@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Apollo, QueryRef, Mutation } from "apollo-angular";
 import gql from "graphql-tag";
+// import { User } from 'src/app/Models/Client/user';
 import { ActivatedRoute, Router } from "@angular/router";
-// import { Product } from 'src/app/Models/Adm/product';
 
 const userQuery = gql`
         query user($userId: String){
@@ -23,40 +23,40 @@ const deleteUser = gql`
             }
         }
     `;
+export interface User {
+
+    _id: string;
+    name: string;
+    email: string;
+
+}
 
 @Component({
-    selector: "app-adm-product-component",
-    templateUrl: "./product.component.html",
+    selector: "app-client-register-component",
+    templateUrl: "./register-component.component.html",
 })
-export class AdmProductComponent implements OnInit {
+export class RegisterComponent implements OnInit {
     // // ************* */
     // displayedColumns: string[] = ['_id', 'email', 'name'];
 
-    // data: Product[] = [];
+    data = [];
     // resp: any = {};
     isLoadingResults = true;
     // // ************* */
-    user: any = [];
-    dataSource: any = [];
+
+
 
     // // ************* */
-    // product: Product = {
-    //     _id: '',
-    //     email: '',
-    //     name: '',
-    //     category: '',
-    //     price: 0,
-    //     quantity: 0,
-    //     specification: new Object();
-    // };
+
+    user: { _id: string, name: string, email: string };
     isLoadingResultsSaD = true;
     // respSaD: any = {};
     // private query: QueryRef<any>;
-    // // ************* */
+    // ************* */
     constructor(private apollo: Apollo, private router: Router, private route: ActivatedRoute) { }
 
     ngOnInit() {
-        // // Get all product
+        // // Get all users
         // this.apollo.query({
         //     query: gql`{ users { _id, email, name } }`
         // }).subscribe(res => {
@@ -85,22 +85,20 @@ export class AdmProductComponent implements OnInit {
     // }
 
     deleteUser() {
-        // this.isLoadingResultsSaD = true;
-        // const userId = this.route.snapshot.params.id;
-        // this.apollo.mutate({
-        //     mutation: deleteUser,
-        //     variables: {
-        //         id: userId
-        //     }
-        // }).subscribe(({ data }) => {
-        //     console.log('Got Data', data);
-        //     this.isLoadingResultsSaD = false;
-        //     this.router.navigate(['/users']);
-        // }, (error) => {
-        //     console.log('There was an error sending the query', error);
-        //     this.isLoadingResultsSaD = false;
-        // });
+        this.isLoadingResultsSaD = true;
+        const userId = this.route.snapshot.params.id;
+        this.apollo.mutate({
+            mutation: deleteUser,
+            variables: {
+                id: userId
+            }
+        }).subscribe(({ data }) => {
+            console.log("Got Data", data);
+            this.isLoadingResultsSaD = false;
+            this.router.navigate(["/users"]);
+        }, (error) => {
+            console.log("There was an error sending the query", error);
+            this.isLoadingResultsSaD = false;
+        });
     }
-
 }
-

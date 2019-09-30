@@ -1,11 +1,65 @@
-<h1 class="h1-panel">User List Panel</h1>
-<router-outlet></router-outlet>
+<!-- <div id="user-login-register-panel">
+    <form (submit)="register()">
+        <h1>REGISTER</h1>
+        <div class="content">
+            <div class="row-input">
+                <input
+                    id="input-username"
+                    type="text"
+                    name="username"
+                    autocomplete="off"
+                    autofocus
+                    required
+                    pattern="^([a-zA-Z]{1,}[a-zA-Z0-9]{0,}){8,}"
+                    placeholder="Eg. abc31aaaas"
+                    value="thisistestadmin"
+                />
+                <label for="input-username">Username</label>
+            </div>
+
+            <div class="row-input">
+                <input
+                    id="input-email"
+                    type="email"
+                    name="email"
+                    autocomplete="off"
+                    required
+                    placeholder="Eg. abc@xyz.etc"
+                    value="thisistestadmin@gmail.com"
+                />
+                <label for="input-email">Email</label>
+            </div>
+
+            <div class="row-input">
+                <input
+                    id="input-password"
+                    type="password"
+                    name="password"
+                    required
+                    minlength="8"
+                    value="35351235"
+                />
+                <label for="input-password">Password</label>
+            </div>
+            <div class="row-input center">
+                <button type="submit" class="btn btn-hover-animate">
+                    Register!
+                </button>
+            </div>
+
+            <div class="msg">
+                <p class="non-selectable">&nbsp;&nbsp;</p>
+            </div>
+        </div>
+    </form>
+</div> -->
+
 <div class="example-container mat-elevation-z8">
     <div class="example-loading-shade" *ngIf="isLoadingResults">
         <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
     </div>
     <div class="button-row">
-        <a mat-flat-button color="primary" [routerLink]="['create']"
+        <a mat-flat-button color="primary" [routerLink]="['/books/add']"
             ><mat-icon>add</mat-icon></a
         >
     </div>
@@ -20,7 +74,7 @@
             matSortDirection="asc"
         >
             <ng-container matColumnDef="_id">
-                <th mat-header-cell *matHeaderCellDef>ID</th>
+                <th mat-header-cell *matHeaderCellDef>id</th>
                 <td mat-cell *matCellDef="let row">{{ row._id }}</td>
             </ng-container>
 
@@ -34,11 +88,11 @@
                 <td mat-cell *matCellDef="let row">{{ row.name }}</td>
             </ng-container>
 
-            <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr
+            <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> -->
+            <!-- <tr
                 mat-row
                 *matRowDef="let row; columns: displayedColumns"
-                [routerLink]="['details/', row._id]"
+                [routerLink]="['/books/detail/', row._id]"
             ></tr> -->
         </table>
     </div>
@@ -49,7 +103,7 @@
         <mat-spinner *ngIf="isLoadingResultsSaD"></mat-spinner>
     </div>
     <div class="button-row">
-        <a mat-flat-button color="primary" [routerLink]="['/user']"
+        <a mat-flat-button color="primary" [routerLink]="['/books']"
             ><mat-icon>list</mat-icon></a
         >
     </div>
@@ -82,7 +136,7 @@
             <a
                 mat-flat-button
                 color="primary"
-                [routerLink]="['edit', user._id]"
+                [routerLink]="['/books/edit', user._id]"
                 ><mat-icon>edit</mat-icon></a
             >
             <a mat-flat-button color="warn" (click)="deleteUser()"
@@ -91,4 +145,3 @@
         </mat-card-actions>
     </mat-card>
 </div>
-<router-outlet></router-outlet>

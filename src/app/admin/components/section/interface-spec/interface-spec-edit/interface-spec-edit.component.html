@@ -96,10 +96,7 @@
                 <!-- Start form Fields array with first row must and dynamically add more -->
                 <!-- loop throught Fields -->
                 <div
-                    *ngFor="
-                        let field of FORM.controls['specifications'].controls;
-                        let i = index
-                    "
+                    *ngFor="let field of getSpecificationArray(); let i = index"
                     cdkDrag
                     #ele="cdkDrag"
                     class="drop-list"
@@ -160,12 +157,7 @@
                         </mat-form-field>
                         <span hidden cdkDragHandle></span>
                         <!--Avoid drag if FormArray.length = 1 -->
-                        <span
-                            *ngIf="
-                                FORM.controls['specifications'].controls
-                                    .length > 1
-                            "
-                        >
+                        <span *ngIf="getSpecificationArray().length > 1">
                             <button
                                 type="button"
                                 mat-mini-fab

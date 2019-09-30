@@ -1,0 +1,19 @@
+<div chckLoc="Client">
+    <header>
+        <div class="container">
+            <app-client-header-component></app-client-header-component>
+        </div>
+    </header>
+
+    <nav id="navSticky">
+        <app-client-nav-component></app-client-nav-component>
+    </nav>
+    <div id="archon-for-section"></div>
+    <section id="display-box">
+        <router-outlet name="primary"></router-outlet>
+    </section>
+
+    <footer>
+        <app-client-footer-component></app-client-footer-component>
+    </footer>
+</div>

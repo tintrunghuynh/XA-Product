@@ -24,6 +24,7 @@
     "@angular/platform-browser": "~8.2.8",
     "@angular/platform-browser-dynamic": "~8.2.8",
     "@angular/router": "~8.2.8",
+    "angular-cli-ghpages": "^0.6.0",
     "apollo-angular": "^1.7.0",
     "apollo-angular-link-http": "^1.8.0",
     "apollo-cache-inmemory": "^1.6.3",

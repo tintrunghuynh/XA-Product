@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, NgForm, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
-import { Apollo } from 'apollo-angular';
-import { AdmInterfaceSpecificationServices } from 'src/app/services/admin/interfaceSpecification/adm-interface-specification.service';
-import { GeneralValidationService } from 'src/app/services/validator/general-validation.service';
-import { FieldTypes, Category, Status } from 'src/app/Models/Enum/interfaceSpecificationFields';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Component, OnInit } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { FormBuilder, FormGroup, NgForm, Validators, FormArray, FormControl, AbstractControl } from "@angular/forms";
+import { Apollo } from "apollo-angular";
+import { AdmInterfaceSpecificationServices } from "src/app/services/admin/interfaceSpecification/adm-interface-specification.service";
+import { GeneralValidationService } from "src/app/services/validator/general-validation.service";
+import { FieldTypes, Category, Status } from "src/app/Models/Enum/interfaceSpecificationFields";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 @Component({
-    selector: 'app-adm-interface-spec-edit-component',
-    templateUrl: './interface-spec-edit.component.html'
+    selector: "app-adm-interface-spec-edit-component",
+    templateUrl: "./interface-spec-edit.component.html"
 })
 export class AdmInterfaceSpecEditComponent implements OnInit {
     FORM: FormGroup;
@@ -72,7 +72,7 @@ export class AdmInterfaceSpecEditComponent implements OnInit {
                     // * Adding valueChange Listenner for the Specification List that loaded
                     let oldValue: any;
                     formGroup.valueChanges.subscribe((valueChange: any) => { // Occurred If TYPING in a field
-                        console.log('valueChanges');
+                        console.log("valueChanges");
                         let firstEqualValueChange = true;
                         let firstDupOldValue = true;
                         // tslint:disable-next-line: prefer-for-of
@@ -81,8 +81,8 @@ export class AdmInterfaceSpecEditComponent implements OnInit {
                             if (valueChange.fieldName === ele.controls.fieldName.value) { // Checking the Value Change
                                 if (firstEqualValueChange) {
                                     console.log(`first | value: ${ele.controls.fieldName.value} ${ele.controls.fieldType.value}\tIndex ${idx}`);
-                                    if (ele.controls.fieldName.hasError('duplicate')) {
-                                        this.removeError(ele.controls.fieldName, 'duplicate');
+                                    if (ele.controls.fieldName.hasError("duplicate")) {
+                                        this.removeError(ele.controls.fieldName, "duplicate");
                                     }
                                     firstEqualValueChange = false;
                                 } else if ((ele.controls.fieldName as FormControl).valid) { // If FormControl has another Errors, avoid to set new Error
@@ -91,8 +91,8 @@ export class AdmInterfaceSpecEditComponent implements OnInit {
                                 }
                             }
                             if (oldValue && oldValue.fieldName === ele.controls.fieldName.value) { // Checking the Old Value
-                                if (firstDupOldValue && ele.controls.fieldName.hasError('duplicate')) {
-                                    this.removeError(ele.controls.fieldName, 'duplicate');
+                                if (firstDupOldValue && ele.controls.fieldName.hasError("duplicate")) {
+                                    this.removeError(ele.controls.fieldName, "duplicate");
                                 }
                                 firstDupOldValue = false;
                             } // End fieldName EventListenner
@@ -125,12 +125,12 @@ export class AdmInterfaceSpecEditComponent implements OnInit {
     getFieldList() {
         const formGroup: FormGroup = this.formBuilder.group({
             fieldName: [
-                '', [
+                "", [
                     Validators.required,
                     GeneralValidationService.nameValidator
                 ]
             ],
-            fieldType: ['', Validators.required]
+            fieldType: ["", Validators.required]
         });
         /**
          *  Loop for checking duplicate fieldName in Field Array
@@ -141,7 +141,7 @@ export class AdmInterfaceSpecEditComponent implements OnInit {
          */
         let oldValue: any;
         formGroup.valueChanges.subscribe((valueChange) => { // Occurred If TYPING in a field
-            console.log('valueChanges');
+            console.log("valueChanges");
             let firstEqualValueChange = true;
             let firstDupOldValue = true;
             const arr = (this.FORM.controls.specifications as FormArray).controls;
@@ -150,8 +150,8 @@ export class AdmInterfaceSpecEditComponent implements OnInit {
                 const element = arr[index] as FormGroup;
                 if (valueChange.fieldName === element.controls.fieldName.value) { // Checking the Value Change
                     if (firstEqualValueChange) {
-                        if (element.controls.fieldName.hasError('duplicate')) {
-                            this.removeError(element.controls.fieldName, 'duplicate');
+                        if (element.controls.fieldName.hasError("duplicate")) {
+                            this.removeError(element.controls.fieldName, "duplicate");
                         }
                         firstEqualValueChange = false;
                     } else if ((element.controls.fieldName as FormControl).valid) { // If FormControl has another Errors, avoid to set new Error
@@ -159,8 +159,8 @@ export class AdmInterfaceSpecEditComponent implements OnInit {
                     }
                 }
                 if (oldValue && oldValue.fieldName === element.controls.fieldName.value) { // Checking the Old Value
-                    if (firstDupOldValue && element.controls.fieldName.hasError('duplicate')) {
-                        this.removeError(element.controls.fieldName, 'duplicate');
+                    if (firstDupOldValue && element.controls.fieldName.hasError("duplicate")) {
+                        this.removeError(element.controls.fieldName, "duplicate");
                     }
                     firstDupOldValue = false;
                 } // End fieldName EventListenner
@@ -170,8 +170,12 @@ export class AdmInterfaceSpecEditComponent implements OnInit {
         return formGroup;
     }
 
+    getSpecificationArray(): AbstractControl[] {
+        return (this.FORM.controls.specifications as FormArray).controls;
+    }
+
     drop(event: CdkDragDrop<FormGroup[]>) {
-        console.log('drop function');
+        console.log("drop function");
         console.log(`pre: ${event.previousIndex}\tcurr: ${event.currentIndex}`);
         if (event.previousIndex === event.currentIndex) { // Drag but Drop at same position
             return;
@@ -195,19 +199,19 @@ export class AdmInterfaceSpecEditComponent implements OnInit {
             isFW = true;
         }
         // Drag&Drop copy the DOM (include Duplicate Error Message). So need to Reassign Duplicate Error
-        if ((isFW && !(array.controls[event.currentIndex] as FormGroup).controls.fieldName.hasError('duplicate')) // Forward, handle if the dragElement hasn't Duplicate Error. Case: no duplicate into duplicate
-            || ((!isFW && (array.controls[event.currentIndex] as FormGroup).controls.fieldName.hasError('duplicate')))) { // Backward, handle if the dragElement has Duplicate Error. Case: duplicate into no duplicate
+        if ((isFW && !(array.controls[event.currentIndex] as FormGroup).controls.fieldName.hasError("duplicate")) // Forward, handle if the dragElement hasn't Duplicate Error. Case: no duplicate into duplicate
+            || ((!isFW && (array.controls[event.currentIndex] as FormGroup).controls.fieldName.hasError("duplicate")))) { // Backward, handle if the dragElement has Duplicate Error. Case: duplicate into no duplicate
             if (isFW) {
-                console.log('Dropped Forward && lowerElement has duplicate error');
+                console.log("Dropped Forward && lowerElement has duplicate error");
             } else {
-                console.log('Dropped Backward && higherElement has duplicate error');
+                console.log("Dropped Backward && higherElement has duplicate error");
             }
             for (let index = 0; index < higherIdx + 1; index++) {
                 const element = array.controls[index] as FormGroup;
                 if (element.controls.fieldName.value === valueCheck) {
                     if (firstEqual) {
-                        if (element.controls.fieldName.hasError('duplicate')) {
-                            this.removeError(element.controls.fieldName, 'duplicate');
+                        if (element.controls.fieldName.hasError("duplicate")) {
+                            this.removeError(element.controls.fieldName, "duplicate");
                         }
                         firstEqual = false;
                     } else if ((element.controls.fieldName as FormControl).valid) { // If FormControl has another Errors, avoid to set new Error
@@ -242,8 +246,8 @@ export class AdmInterfaceSpecEditComponent implements OnInit {
             const element = formArray.controls[indexLoop] as FormGroup;
             if (deleteValue.fieldName.value === element.controls.fieldName.value) { // Checking the Old Value
                 if (firstDupOldValue) {
-                    if (element.controls.fieldName.hasError('duplicate')) {
-                        this.removeError(element.controls.fieldName, 'duplicate');
+                    if (element.controls.fieldName.hasError("duplicate")) {
+                        this.removeError(element.controls.fieldName, "duplicate");
                     }
                     firstDupOldValue = false;
                 }
@@ -251,11 +255,12 @@ export class AdmInterfaceSpecEditComponent implements OnInit {
         }
     }
 
-    async onSubmit(form: NgForm) {
+    async onSubmit(form) {
+        const FORM: NgForm = form;
         this.isLoadingResults = true;
         let acceptName = true;
-        const nameControl = form.form.get('name');
-        const id = form.form.get('id').value;
+        const nameControl = FORM.form.get("name");
+        const id = FORM.form.get("id").value;
         console.log(`services.isNameExistsOnUpdate(\nid=${id},\nname=${nameControl.value})`);
         // *[Server-Side] Check Name Duplicate Or Not
         await this.services.isNameExistsOnUpdate(id, nameControl.value).then((resp: boolean) => {
@@ -269,18 +274,18 @@ export class AdmInterfaceSpecEditComponent implements OnInit {
         });
         // Stop Update The Interface If Has Error From The Server
         if (!acceptName) {
-            console.log('stop Update');
+            console.log("stop Update");
             this.isLoadingResults = false;
             return;
         }
         // Update The Interface
-        console.log('UPDATING - Sending Request To Server');
-        await this.services.update(form).then((resp: any) => {
+        console.log("UPDATING - Sending Request To Server");
+        await this.services.update(FORM).then((resp: any) => {
             if (resp.ok) {
-                console.log('Updated');
-                this.router.navigate(['admin/interfaceSpecification/details/', resp.data._id]);
+                console.log("Updated");
+                this.router.navigate(["admin/interfaceSpecification/details/", resp.data._id]);
             } else if (!resp.ok) {
-                console.log('Error, Cannot Update');
+                console.log("Error, Cannot Update");
                 this.errorMSG = resp.errorMessage.message; // Error Message By Server GrapqhQL
             }
 
