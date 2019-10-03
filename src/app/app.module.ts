@@ -151,8 +151,8 @@ export class AppModule {
 
     constructor(private apollo: Apollo, private httpLink: HttpLink) {
         // Reading Environment Variables
-        const GRAPHQL_BASEURI = process.env.GraphQL_URL_PATH || "http://localhost:3000/graphql-retrieve";
-
+        const GRAPHQL_BASEURI = process.env.GraphQL_URL_PATH || "https://14.245.115.96:3000/graphql-retrieve";
+        console.log(GRAPHQL_BASEURI);
         console.log(`uri: ${GRAPHQL_BASEURI}`);
         this.apollo.create({
             link: this.httpLink.create({
@@ -160,7 +160,12 @@ export class AppModule {
                 // Don't forget that you can actually pass http Headers
                 // directly here with the option "httpOptions"
             }),
-            cache: new InMemoryCache({ dataIdFromObject: o => o.id }),
+            cache: new InMemoryCache({ dataIdFromObject: o => o.id}),
         });
+        // this.apollo.create({
+        //     link: this.httpLink.create({
+        //         uri: GRAPHQL_BASEURI,
+        //     }), cache: new InMemoryCache()
+        // });
     }
 }

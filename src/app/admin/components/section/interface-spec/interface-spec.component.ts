@@ -1,19 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Apollo, QueryRef, Mutation } from 'apollo-angular';
-import gql from 'graphql-tag';
-import { InterfaceSpecification } from 'src/app/Models/Adm/interface-spec';
-import { ActivatedRoute, Router } from '@angular/router';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-angular-link-http';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { Apollo, QueryRef, Mutation } from "apollo-angular";
+import gql from "graphql-tag";
+import { InterfaceSpecification } from "src/app/Models/Adm/interface-spec";
+import { ActivatedRoute, Router } from "@angular/router";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { HttpLink } from "apollo-angular-link-http";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
 @Component({
-    selector: 'app-adm-interface-spec-component',
-    templateUrl: './interface-spec.component.html'
+    selector: "app-adm-interface-spec-component",
+    templateUrl: "./interface-spec.component.html"
 })
 export class AdmInterfaceSpecComponent implements OnInit {
     // *********** //
-    displayedColumns: string[] = ['DE', '_id', 'name', 'status', 'updatedDate', 'createdDate'];
+    displayedColumns: string[] = ["DE", "_id", "name", "status", "updatedDate", "createdDate"];
     data: InterfaceSpecification[] = [];
     dataSource;
     resp: any = {};

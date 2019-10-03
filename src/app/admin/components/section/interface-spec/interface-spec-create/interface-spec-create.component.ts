@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, NgForm, Validators, FormArray, FormControl, AbstractControl } from "@angular/forms";
 import { Apollo } from "apollo-angular";
@@ -6,11 +6,13 @@ import { AdmInterfaceSpecificationServices } from "src/app/services/admin/interf
 import { GeneralValidationService } from "src/app/services/validator/general-validation.service";
 import { FieldTypes, Category, Status } from "src/app/Models/Enum/interfaceSpecificationFields";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { Subject } from "rxjs";
 @Component({
     selector: "app-adm-interface-spec-create-component",
     templateUrl: "./interface-spec-create.component.html"
 })
-export class AdmInterfaceSpecCreateComponent implements OnInit {
+export class AdmInterfaceSpecCreateComponent implements OnInit, OnDestroy {
+    private unsubscribe$ = new Subject<void>();
     FORM: FormGroup;
     services: AdmInterfaceSpecificationServices;
     isLoadingResults = false;
@@ -221,5 +223,10 @@ export class AdmInterfaceSpecCreateComponent implements OnInit {
 
         });
         this.isLoadingResults = false;
+    }
+
+    ngOnDestroy() {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
     }
 }

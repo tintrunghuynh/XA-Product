@@ -13,6 +13,6 @@ platformBrowserDynamic().bootstrapModule(AppModule)
     .catch(err => console.error(err));
 
 // Loading UI/UX
-import "src/assets/ts/client/base";
-import "src/assets/ts/admin/base";
+// import "src/assets/ts/client/base";
+// import "src/assets/ts/admin/base";
 console.log(`process.env.MONGODB_URL: ${process.env.NODE_ENV}`);

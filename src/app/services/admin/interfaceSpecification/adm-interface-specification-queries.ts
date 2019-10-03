@@ -31,19 +31,19 @@ export const detailsQuery = gql`
     }
 `;
 
-// export const detailsQuerySubscription = gql`
-//     subscriber ($id: String!){
-//         getInterfaceSpecificationSubscription(id: $id) {
-//             ok,
-//             message,
-//             data,
-//             errorMessage{
-//                 message,
-//                 fields,
-//             }
-//         }
-//     }
-// `;
+export const detailsQuerySubscription = gql`
+    subscription ($id: String!){
+        interfaceSpecificationChanged(id: $id) {
+            ok,
+            message,
+            data,
+            errorMessage{
+                message,
+                fields,
+            }
+        }
+    }
+`;
 
 
 export const createMutation = gql`

@@ -5,7 +5,6 @@ import { Component, OnInit } from "@angular/core";
     templateUrl: "./admin-component.component.html",
 })
 export class AdminComponent implements OnInit {
-    title = "Admin Panel";
     constructor() { }
 
     ngOnInit() {
